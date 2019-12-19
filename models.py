@@ -1,4 +1,5 @@
 from app import db
+
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 import datetime
 
@@ -25,6 +26,7 @@ class User(db.Model):
       'password': self.password
 
     }
+
 
 class UserProfile(db.Model):
   __tablename__ = 'users_profile'

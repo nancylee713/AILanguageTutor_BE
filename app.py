@@ -36,6 +36,7 @@ def get_users():
     except Exception as e:
             return(str(e))
 
+
 @app.route('/users_profile')
 def get_users_profile():
     try:
@@ -43,7 +44,7 @@ def get_users_profile():
         return jsonify([e.serialize() for e in users])
     except Exception as e:
             return(str(e))
-
-
+      
+      
 if __name__ == '__main__':
     app.run()
