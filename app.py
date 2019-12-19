@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-from models import User
+from models import User, UserProfile
 
 
 @app.route("/")
@@ -37,5 +37,14 @@ def get_users():
             return(str(e))
 
 
+@app.route('/users_profile')
+def get_users_profile():
+    try:
+        users = UserProfile.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+            return(str(e))
+      
+      
 if __name__ == '__main__':
     app.run()
