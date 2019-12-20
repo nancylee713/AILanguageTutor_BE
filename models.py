@@ -1,5 +1,5 @@
 from app import db
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
 import datetime
 
 class User(db.Model):
@@ -123,6 +123,70 @@ class GrammarQuestion(db.Model):
          'id': self.id,
          'level': self.level,
          'text': self.text,
+         'created_date': self.created_date,
+         'updated_date': self.updated_date
+
+        }
+
+class UserSpeech(db.Model):
+    __tablename__ = 'users_speech'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey(User.id))
+    speech_question_id = db.Column(db.Integer, ForeignKey(SpeechQuestion.id))
+    status = db.Column(db.Boolean, default=False)
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+    def __init__(self, user_id, speech_question_id, status, created_date, updated_date):
+        self.user_id = user_id
+        self.speech_question_id = speech_question_id
+        self.status = status
+        self.created_date = created_date
+        self.updated_date = updated_date
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+
+    def serialize(self):
+        return {
+         'id': self.id,
+         'user_id': self.user_id,
+         'speech_question_id': self.speech_question_id,
+         'status': self.status,
+         'created_date': self.created_date,
+         'updated_date': self.updated_date
+
+        }
+
+class UserGrammar(db.Model):
+    __tablename__ = 'users_grammar'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey(User.id))
+    grammar_question_id = db.Column(db.Integer, ForeignKey(GrammarQuestion.id))
+    status = db.Column(db.Boolean, default=False)
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+    def __init__(self, user_id, grammar_question_id, status, created_date, updated_date):
+        self.user_id = user_id
+        self.grammar_question_id = grammar_question_id
+        self.status = status
+        self.created_date = created_date
+        self.updated_date = updated_date
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+
+    def serialize(self):
+        return {
+         'id': self.id,
+         'user_id': self.user_id,
+         'grammar_question_id': self.grammar_question_id,
+         'status': self.status,
          'created_date': self.created_date,
          'updated_date': self.updated_date
 

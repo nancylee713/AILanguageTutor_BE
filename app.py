@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-from models import User, UserProfile, SpeechQuestion, GrammarQuestion
+from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
 
 @app.route("/")
@@ -56,6 +56,22 @@ def get_speech_questions():
 def get_grammar_questions():
     try:
         users = GrammarQuestion.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
+@app.route('/users_speech')
+def get_users_speech():
+    try:
+        users = UserSpeech.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
+@app.route('/users_grammar')
+def get_users_grammar():
+    try:
+        users = UserGrammar.query.all()
         return jsonify([e.serialize() for e in users])
     except Exception as e:
         return(str(e))
