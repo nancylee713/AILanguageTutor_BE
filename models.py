@@ -31,6 +31,7 @@ class User(db.Model):
       'updated_date': self.updated_date
     }
 
+
 class UserProfile(db.Model):
   __tablename__ = 'users_profile'
 

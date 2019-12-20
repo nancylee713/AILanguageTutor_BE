@@ -25,6 +25,7 @@ def get_users():
     except Exception as e:
         return(str(e))
 
+
 @app.route('/users_profile')
 def get_users_profile():
     try:
