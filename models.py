@@ -5,13 +5,17 @@ import datetime
 class User(db.Model):
   __tablename__ = 'users'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   email = db.Column(db.String())
   password = db.Column(db.String())
+  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
   def __init__(self, email, password):
     self.email = email
     self.password = password
+    self.created_date = created_date
+    self.updated_date = updated_date
 
 
   def __repr__(self):
@@ -22,8 +26,9 @@ class User(db.Model):
     return {
       'id': self.id,
       'email': self.email,
-      'password': self.password
-
+      'password': self.password,
+      'created_date': self.created_date,
+      'updated_date': self.updated_date
     }
 
 class UserProfile(db.Model):
@@ -36,8 +41,6 @@ class UserProfile(db.Model):
   user_id = db.Column(db.Integer, ForeignKey(User.id))
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-
-  user = relationship('User', backref='users_profile')
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
     self.name = name
@@ -60,6 +63,6 @@ class UserProfile(db.Model):
       'proficiency': self.proficiency,
       'user_id': self.user_id,
       'created_date': self.created_date,
-      'updated_date': self.updated_date,
+      'updated_date': self.updated_date
 
     }
