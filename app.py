@@ -1,6 +1,11 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+
+
+# secret = bcrypt.generate_password_hash('password').decode('utf-8')
+# bcrypt.check_password_hash(secret, 'password')
 
 
 app = Flask(__name__)
@@ -9,6 +14,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+bcrypt = Bcrypt(app)
 
 from models import User, UserProfile
 
@@ -21,11 +27,17 @@ def hello():
 def get_book_name(name):
     return "name : {}".format(name)
 
-@app.route("/details")
-def get_book_details():
-    author=request.args.get('author')
-    published=request.args.get('published')
-    return "Author : {}, Published: {}".format(author,published)
+@app.route("/signup", methods=['GET','POST'])
+def create_new_user():
+    req=request.get_json()
+    password=request.args.get('password')
+    print("Email : {}, Password: {}".format(req['email'],req['password']))
+    hash = bcrypt.generate_password_hash(req['password']).decode('utf-8')
+    print(hash)
+#     user = User(email=req['email'], password=hash)
+#     db.session.add(user)
+#     db.session.commit()
+    return jsonify(req), 222
 
 
 @app.route('/users')
