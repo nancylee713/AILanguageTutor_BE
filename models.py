@@ -39,7 +39,6 @@ class UserProfile(db.Model):
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
-  user = relationship('User', backref='users_profile')
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
     self.name = name
