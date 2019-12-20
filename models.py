@@ -98,3 +98,32 @@ class SpeechQuestion(db.Model):
          'updated_date': self.updated_date
 
         }
+
+class GrammarQuestion(db.Model):
+    __tablename__ = 'grammar_questions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.String())
+    text = db.Column(db.String())
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+    def __init__(self, level, text, created_date, updated_date):
+        self.level = level
+        self.text = text
+        self.created_date = created_date
+        self.updated_date = updated_date
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+
+    def serialize(self):
+        return {
+         'id': self.id,
+         'level': self.level,
+         'text': self.text,
+         'created_date': self.created_date,
+         'updated_date': self.updated_date
+
+        }
