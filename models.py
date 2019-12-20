@@ -8,10 +8,10 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   email = db.Column(db.String())
   password = db.Column(db.String())
-  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+  created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+  updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
-  def __init__(self, email, password):
+  def __init__(self, email, password, created_date, updated_date):
     self.email = email
     self.password = password
     self.created_date = created_date
@@ -39,8 +39,8 @@ class UserProfile(db.Model):
   age = db.Column(db.Integer)
   proficiency = db.Column(db.String())
   user_id = db.Column(db.Integer, ForeignKey(User.id))
-  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+  created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+  updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
     self.name = name
@@ -66,3 +66,35 @@ class UserProfile(db.Model):
       'updated_date': self.updated_date
 
     }
+
+class SpeechQuestion(db.Model):
+  __tablename__ = 'speech_questions'
+
+  id = db.Column(db.Integer, primary_key=True)
+  level = db.Column(db.String())
+  text = db.Column(db.String())
+  image_url = db.Column(db.String())
+  created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+  updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+  def __init__(self, level, text, image_url, created_date, updated_date):
+    self.level = level
+    self.text = text
+    self.image_url = image_url
+    self.created_date = created_date
+    self.updated_date = updated_date
+
+ def __repr__(self):
+   return '<id {}>'.format(self.id)
+
+
+ def serialize(self):
+   return {
+     'id': self.id,
+     'level': self.level,
+     'text': self.text,
+     'image_url': self.image_url,
+     'created_date': self.created_date,
+     'updated_date': self.updated_date
+
+   }
