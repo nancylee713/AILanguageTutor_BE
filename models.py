@@ -12,6 +12,8 @@ class User(db.Model):
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
   profile = db.relationship('UserProfile', backref='profile', lazy=True)
+  created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  updated_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
   def __init__(self, email, password, created_date, updated_date):
   def __init__(self, email, password):
@@ -48,6 +50,8 @@ class UserProfile(db.Model):
   user_id = db.Column(db.Integer, ForeignKey('user.id'))
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+  created_date = db.Column(DateTime, default=datetime.utcnow)
+  updated_date = db.Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
@@ -87,6 +91,8 @@ class SpeechQuestion(db.Model):
   image_url = db.Column(db.String())
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+  created_date = db.Column(DateTime, default=datetime.utcnow)
+  updated_date = db.Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
   def __init__(self, level, text, image_url, created_date, updated_date):
   def __init__(self, level, text, image_url):
