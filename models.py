@@ -2,6 +2,8 @@ from app import db
 
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 import datetime
+from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey
+from datetime import datetime
 
 class User(db.Model):
   __tablename__ = 'users'
