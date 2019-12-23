@@ -10,6 +10,7 @@ class User(db.Model):
   password = db.Column(db.String())
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+  profile = db.relationship('UserProfile', backref='profile', lazy=True)
 
   def __init__(self, email, password, created_date, updated_date):
     self.email = email
@@ -39,9 +40,10 @@ class UserProfile(db.Model):
   name = db.Column(db.String())
   age = db.Column(db.Integer)
   proficiency = db.Column(db.String())
-  user_id = db.Column(db.Integer, ForeignKey(User.id))
+  user_id = db.Column(db.Integer, ForeignKey('user.id'))
   created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
     self.name = name
