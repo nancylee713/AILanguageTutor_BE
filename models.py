@@ -16,6 +16,7 @@ class User(db.Model):
   password = db.Column(db.String(), nullable=False)
   created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   updated_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+  profile = db.relationship('UserProfile', backref='user', lazy=True)
 
   def __init__(self, email, password, created_date, updated_date):
   def __init__(self, email, password):
