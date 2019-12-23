@@ -30,6 +30,8 @@ class User(db.Model):
 
   def __repr__(self):
     return '<id {}>'.format(self.id)
+      return f"User(id: '{self.id}', email: '{self.email}')"
+
 
 
   def serialize(self):
@@ -74,6 +76,7 @@ class UserProfile(db.Model):
 
   def __repr__(self):
     return '<id {}>'.format(self.id)
+    return f"UserProfile(name: '{self.name}', level: '{self.proficiency}', user_id: '{self.user_id}')"
 
 
   def serialize(self):
@@ -115,6 +118,7 @@ class SpeechQuestion(db.Model):
 
   def __repr__(self):
     return '<id {}>'.format(self.id)
+      return f"SpeechQuestion(id: '{self.id}', level: '{self.level}')"
 
 
   def serialize(self):
