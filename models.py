@@ -14,10 +14,13 @@ class User(db.Model):
   profile = db.relationship('UserProfile', backref='profile', lazy=True)
 
   def __init__(self, email, password, created_date, updated_date):
+  def __init__(self, email, password):
     self.email = email
     self.password = password
     self.created_date = created_date
     self.updated_date = updated_date
+    self.created_date = self.created_date
+    self.updated_date = self.updated_date
 
 
   def __repr__(self):
@@ -48,12 +51,15 @@ class UserProfile(db.Model):
 
 
   def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
+  def __init__(self, name, age, proficiency, user_id):
     self.name = name
     self.age = age
     self.proficiency = proficiency
     self.user_id = user_id
     self.created_date = created_date
     self.updated_date = updated_date
+    self.created_date = self.created_date
+    self.updated_date = self.updated_date
 
 
   def __repr__(self):
@@ -83,11 +89,14 @@ class SpeechQuestion(db.Model):
   updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
   def __init__(self, level, text, image_url, created_date, updated_date):
+  def __init__(self, level, text, image_url):
     self.level = level
     self.text = text
     self.image_url = image_url
     self.created_date = created_date
     self.updated_date = updated_date
+    self.created_date = self.created_date
+    self.updated_date = self.updated_date
 
   def __repr__(self):
     return '<id {}>'.format(self.id)
