@@ -3,3 +3,9 @@ venv
 __pycache__
 
 .vscode
+
+migrations
+
+google_cloud_sdk.json
+
+.gitignore
