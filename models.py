@@ -1,4 +1,5 @@
 from app import db
+
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 import datetime
 
@@ -32,6 +33,7 @@ class User(db.Model):
       'updated_date': self.updated_date
 
     }
+
 
 class UserProfile(db.Model):
   __tablename__ = 'users_profile'
