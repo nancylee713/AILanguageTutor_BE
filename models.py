@@ -1,7 +1,5 @@
 from app import db
 
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
-import datetime
 from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey
 from datetime import datetime
 
@@ -9,29 +7,20 @@ class User(db.Model):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  email = db.Column(db.String())
-  password = db.Column(db.String())
-  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-  profile = db.relationship('UserProfile', backref='profile', lazy=True)
   email = db.Column(db.String(), unique=True, nullable=False)
   password = db.Column(db.String(), nullable=False)
   created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   updated_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
   profile = db.relationship('UserProfile', backref='user', lazy=True)
 
-  def __init__(self, email, password, created_date, updated_date):
   def __init__(self, email, password):
     self.email = email
     self.password = password
-    self.created_date = created_date
-    self.updated_date = updated_date
     self.created_date = self.created_date
     self.updated_date = self.updated_date
 
 
   def __repr__(self):
-    return '<id {}>'.format(self.id)
       return f"User(id: '{self.id}', email: '{self.email}')"
 
 
@@ -51,33 +40,24 @@ class UserProfile(db.Model):
   __tablename__ = 'users_profile'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  name = db.Column(db.String())
   name = db.Column(db.String(),unique=True, nullable=False)
   age = db.Column(db.Integer)
-  proficiency = db.Column(db.String())
-  user_id = db.Column(db.Integer, ForeignKey('user.id'))
-  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
   proficiency = db.Column(db.String(), nullable=False)
   user_id = db.Column(db.Integer, ForeignKey(User.id), nullable=False)
   created_date = db.Column(DateTime, default=datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-  def __init__(self, name, age, proficiency, user_id, created_date, updated_date):
   def __init__(self, name, age, proficiency, user_id):
     self.name = name
     self.age = age
     self.proficiency = proficiency
     self.user_id = user_id
-    self.created_date = created_date
-    self.updated_date = updated_date
     self.created_date = self.created_date
     self.updated_date = self.updated_date
 
 
   def __repr__(self):
-    return '<id {}>'.format(self.id)
     return f"UserProfile(name: '{self.name}', level: '{self.proficiency}', user_id: '{self.user_id}')"
 
 
@@ -96,30 +76,21 @@ class UserProfile(db.Model):
 class SpeechQuestion(db.Model):
   __tablename__ = 'speech_questions'
 
-  id = db.Column(db.Integer, primary_key=True)
-  level = db.Column(db.String())
-  text = db.Column(db.String())
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   level = db.Column(db.String(), nullable=False)
   text = db.Column(db.Text, nullable=False)
   image_url = db.Column(db.String())
-  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-  updated_date = db.Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
   created_date = db.Column(DateTime, default=datetime.utcnow)
   updated_date = db.Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-  def __init__(self, level, text, image_url, created_date, updated_date):
   def __init__(self, level, text, image_url):
     self.level = level
     self.text = text
     self.image_url = image_url
-    self.created_date = created_date
-    self.updated_date = updated_date
     self.created_date = self.created_date
     self.updated_date = self.updated_date
 
   def __repr__(self):
-    return '<id {}>'.format(self.id)
       return f"SpeechQuestion(id: '{self.id}', level: '{self.level}')"
 
 
