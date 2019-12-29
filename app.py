@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
-from models import User, UserProfile
+from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
 
 @app.route("/")
@@ -64,7 +64,7 @@ def get_users():
         users = User.query.all()
         return jsonify([e.serialize() for e in users])
     except Exception as e:
-            return(str(e))
+        return(str(e))
 
 
 @app.route('/users_profile')
@@ -73,8 +73,39 @@ def get_users_profile():
         users = UserProfile.query.all()
         return jsonify([e.serialize() for e in users])
     except Exception as e:
-            return(str(e))
-      
-      
+        return(str(e))
+
+@app.route('/speech_questions')
+def get_speech_questions():
+    try:
+        users = SpeechQuestion.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
+@app.route('/grammar_questions')
+def get_grammar_questions():
+    try:
+        users = GrammarQuestion.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
+@app.route('/users_speech')
+def get_users_speech():
+    try:
+        users = UserSpeech.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
+@app.route('/users_grammar')
+def get_users_grammar():
+    try:
+        users = UserGrammar.query.all()
+        return jsonify([e.serialize() for e in users])
+    except Exception as e:
+        return(str(e))
+
 if __name__ == '__main__':
     app.run()
