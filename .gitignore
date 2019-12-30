@@ -6,6 +6,6 @@ __pycache__
 
 migrations
 
-google_cloud_sdk.json
+.env
 
 .gitignore
