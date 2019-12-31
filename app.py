@@ -9,9 +9,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
-
 
 @app.route("/")
 def hello():
