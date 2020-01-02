@@ -21,10 +21,6 @@ from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeec
 def hello():
     return "Hello World!"
 
-@app.route("/name/<name>")
-def get_book_name(name):
-    return "name : {}".format(name)
-
 @app.route("/signup", methods=['GET','POST'])
 def create_new_user():
     req=request.get_json()
