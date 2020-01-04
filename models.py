@@ -1,6 +1,6 @@
 from app import db
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
-import datetime
+from datetime import datetime
 
 class User(db.Model):
   __tablename__ = 'users'
@@ -105,17 +105,17 @@ class GrammarQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     level = db.Column(db.String())
     text = db.Column(db.String())
-    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, level, text, created_date, updated_date):
         self.level = level
         self.text = text
-        self.created_date = created_date
-        self.updated_date = updated_date
+        self.created_date = self.created_date
+        self.updated_date = self.updated_date
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return f"GrammarQuestion(id: '{self.id}', level: '{self.level}')"
 
 
     def serialize(self):
@@ -135,15 +135,15 @@ class UserSpeech(db.Model):
     user_id = db.Column(db.Integer, ForeignKey(User.id))
     speech_question_id = db.Column(db.Integer, ForeignKey(SpeechQuestion.id))
     status = db.Column(db.Boolean, default=False)
-    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, user_id, speech_question_id, status, created_date, updated_date):
         self.user_id = user_id
         self.speech_question_id = speech_question_id
         self.status = status
-        self.created_date = created_date
-        self.updated_date = updated_date
+        self.created_date = self.created_date
+        self.updated_date = self.updated_date
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -167,15 +167,15 @@ class UserGrammar(db.Model):
     user_id = db.Column(db.Integer, ForeignKey(User.id))
     grammar_question_id = db.Column(db.Integer, ForeignKey(GrammarQuestion.id))
     status = db.Column(db.Boolean, default=False)
-    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_date = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, user_id, grammar_question_id, status, created_date, updated_date):
         self.user_id = user_id
         self.grammar_question_id = grammar_question_id
         self.status = status
-        self.created_date = created_date
-        self.updated_date = updated_date
+        self.created_date = self.created_date
+        self.updated_date = self.updated_date
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
