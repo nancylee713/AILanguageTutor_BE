@@ -12,7 +12,7 @@ class User(db.Model):
   updated_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
   profile = db.relationship('UserProfile', backref='user', lazy=True)
 
-  def __init__(self, email, password, created_date, updated_date):
+  def __init__(self, email, password):
     self.email = email
     self.password = password
     self.created_date = self.created_date
@@ -108,7 +108,7 @@ class GrammarQuestion(db.Model):
     created_date = db.Column(db.DateTime, default=datetime.utcnow)
     updated_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, level, text, created_date, updated_date):
+    def __init__(self, level, text):
         self.level = level
         self.text = text
         self.created_date = self.created_date
