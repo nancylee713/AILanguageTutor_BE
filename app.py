@@ -32,8 +32,6 @@ def create_new_user():
     user = User(email=req['email'], password=hash)
     db.session.add(user)
     db.session.commit()
-#     not sure what to return here
-    print('user:', user.id)
     return jsonify({'user_id':user.id, 'email':user.email}), 222
 
 
@@ -41,7 +39,6 @@ def create_new_user():
 def login_user():
         req=request.get_json()
         user=User.query.filter_by(email=req['email']).first()
-        print(user)
         if user and bcrypt.check_password_hash(req['password'], user.password):
                 profile=UserProfile.query.filter_by(user_id=user.id).first()
                 print(profile)
