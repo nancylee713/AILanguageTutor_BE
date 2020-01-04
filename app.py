@@ -1,11 +1,7 @@
 import os
-from flask import Flask, request, jsonify, json
+from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-
-
-# secret = bcrypt.generate_password_hash('password').decode('utf-8')
-# bcrypt.check_password_hash(secret, 'password')
 
 
 app = Flask(__name__)
@@ -17,6 +13,7 @@ bcrypt = Bcrypt(app)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
+
 @app.route("/")
 def hello():
     return "Hello World!"
@@ -27,7 +24,6 @@ def create_new_user():
     password=request.args.get('password')
     print("Email : {}, Password: {}".format(req['email'],req['password']))
     hash = bcrypt.generate_password_hash(req['password']).decode('utf-8')
-    print(hash)
     check_user_exists = User.query.filter_by(email=req['email']).first()
     if check_user_exists:
             return jsonify({'error': 'Email already exists'}), 409
@@ -36,20 +32,27 @@ def create_new_user():
     user = User(email=req['email'], password=hash)
     db.session.add(user)
     db.session.commit()
-#     not sure what to return here
-    return jsonify(req), 222
+    return jsonify({'user_id':user.id, 'email':user.email}), 222
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login_user():
         req=request.get_json()
         user=User.query.filter_by(email=req['email']).first()
-        print(user)
         if user and bcrypt.check_password_hash(req['password'], user.password):
                 profile=UserProfile.query.filter_by(user_id=user.id).first()
                 print(profile)
         # not sure what to return here either
         return jsonify('testing')
+
+
+@app.route("/create_user_profile", methods=['GET', 'POST'])
+def create_user_profile():
+        req=request.get_json()
+        user_profile=UserProfile(user_id=req['user_id'], name=req['name'], age=req['age'], proficiency=req['proficiency'])
+        db.session.add(user_profile)
+        db.session.commit()
+        return jsonify(user_profile.serialize())
 
 
 
