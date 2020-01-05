@@ -2,7 +2,9 @@ import os
 from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-
+import requests
+import json
+from flask_seeder import FlaskSeeder
 
 app = Flask(__name__)
 
@@ -11,12 +13,32 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
+seeder = FlaskSeeder()
+seeder.init_app(app, db)
+
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
+unsplash_access_key = app.config['UNSPLASH_ACCESS_KEY']
 
 
 @app.route("/")
-def hello():
-    return "Hello World!"
+def generate_speech_question():
+    word_list = ['cup', 'dish', 'fork']
+    level = 'beginner'
+
+    for text in word_list:
+        params = { "query": text }
+        headers = {
+            "Accept-Version": "v1",
+            "Authorization": "Client-ID {}".format(unsplash_access_key)
+        }
+        response = requests.get("https://api.unsplash.com/search/photos", params=params, headers=headers)
+        image_url = json.loads(response.text)["results"][0]["urls"]["full"]
+
+        speech_question = SpeechQuestion(text=text, level=level, image_url=image_url)
+        db.session.add(speech_question)
+        db.session.commit()
+
+    print("{} {}-level words have been added to the database!".format(len(word_list), level))
 
 @app.route("/signup", methods=['GET','POST'])
 def create_new_user():
