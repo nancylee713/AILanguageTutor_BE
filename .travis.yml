@@ -12,5 +12,5 @@ deploy:
   provider: heroku
   api_key:
     secure: xVl1P+bELgetwjo5CCYXwa+xGAcC+HTRAcva//KKlf+CYDsKcTXWXRpRVcqGHkfkpDYuuOXKFoYRn838S7JKSHxBwDRiq6qVr1LSae+i2x+SNugr6v+DpuM7ANTbPJuadBqWjP/oMpKv8amfR3mct6mKtmAjiY2boUJHDFgjyTS+J0SSwBNDrsBVR7ojQqherQf83ldY5UO1qgBEoq45hibzTtcbvtR5P4XST4ecBVXrVJqg2FtYQa8jcgFmbxdoe/U3evKPgZpI4OqLY8FxTLGWkWLq9L0/ybnmvBIMmHB/D0RfHZSAFAtYZFGiuDBkk/UEkj+Tsofugzkendbo6L9MuCTAIUuPs4pIH9CiYw5QvuiLpVKUcyP+Nxf+IewAK1uPzhUbPfnL/MY/vRmMoDz6/t9WX/xJE3zZ2OJdgOz/lnMRBLjnoTGw5ZpU2A6oda1BfNFoY3/bMUsiMV4NYHhmii4qS8DI9I8FQaqxpJI1lbXmyPYErF1tQboOMevbGRStvQ4ssgos6BCiLq2uXsiAFA8IqEpEeRiRqIph9NR1apzIHV9/K00IZNi4CPBZ/fbi9mWK4CNWwxFF2VXHflf2tKhFdOTtt+bbyJeIv1eRVSKhNHm/RELdIpRxvTQwBIoyF+pBaaUwrHRJYQVs316I9q86tr0MUiCZyOji0Mw=
-  app: language_learner_be_api
-  
+  app:
+    on: staging
