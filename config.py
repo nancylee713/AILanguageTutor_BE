@@ -24,3 +24,4 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    PRESERVE_CONTEXT_ON_EXCEPTION = False

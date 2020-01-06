@@ -27,7 +27,7 @@ class TestFlaskApi(unittest.TestCase):
         response = self.app.get(USERS_URL)
         data = json.loads(response.get_data())
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(data), 6)
+        self.assertEqual(len(data), 7)
 
 
     def test_get_one_user(self):
@@ -58,7 +58,7 @@ class TestFlaskApi(unittest.TestCase):
         self.assertEqual(response.status_code, 409)
 
     def test_post_new_user(self):
-        user = {"email": "test100@email.com", "password": "password"}
+        user = {"email": "test101@email.com", "password": "password"}
         response = self.app.post(SIGNUP_URL,
                                  data=json.dumps(user),
                                  content_type='application/json')
