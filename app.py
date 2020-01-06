@@ -26,7 +26,7 @@ def create_new_user():
     hash = bcrypt.generate_password_hash(req['password']).decode('utf-8')
     check_user_exists = User.query.filter_by(email=req['email']).first()
     if check_user_exists:
-            return jsonify({'error': 'Email already exists'}), 409
+        return jsonify({'error': 'Email already exists'}), 409
 
 
     user = User(email=req['email'], password=hash)
@@ -37,22 +37,20 @@ def create_new_user():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login_user():
-        req=request.get_json()
-        user=User.query.filter_by(email=req['email']).first()
-        if user and bcrypt.check_password_hash(req['password'], user.password):
-                profile=UserProfile.query.filter_by(user_id=user.id).first()
-                print(profile)
-        # not sure what to return here either
-        return jsonify('testing')
+    req=request.get_json()
+    user=User.query.filter_by(email=req['email']).first()
+    if user and bcrypt.check_password_hash(user.password, req['password']):
+            profile=UserProfile.query.filter_by(user_id=user.id).first()
+    return jsonify(profile.serialize())
 
 
 @app.route("/create_user_profile", methods=['GET', 'POST'])
 def create_user_profile():
-        req=request.get_json()
-        user_profile=UserProfile(user_id=req['user_id'], name=req['name'], age=req['age'], proficiency=req['proficiency'])
-        db.session.add(user_profile)
-        db.session.commit()
-        return jsonify(user_profile.serialize())
+    req=request.get_json()
+    user_profile=UserProfile(user_id=req['user_id'], name=req['name'], age=req['age'], proficiency=req['proficiency'])
+    db.session.add(user_profile)
+    db.session.commit()
+    return jsonify(user_profile.serialize())
 
 
 
