@@ -20,6 +20,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 
 class TestingConfig(Config):
