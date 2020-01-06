@@ -134,7 +134,7 @@ This api is used to create and login users. Then it is able to return questions 
 <details>
 <summary>Data flow and database schema (PSQL)</summary>
 
-![Schema](./docs/images/schema.png)
+![Schema](./docs/images/Schema.png)
 </details>
 
 
