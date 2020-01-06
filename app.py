@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -40,9 +39,11 @@ def login_user():
     req=request.get_json()
     user=User.query.filter_by(email=req['email']).first()
     if user and bcrypt.check_password_hash(user.password, req['password']):
-            profile=UserProfile.query.filter_by(user_id=user.id).first()
-    return jsonify(profile.serialize())
-
+        profile=UserProfile.query.filter_by(user_id=user.id).first()
+        print(profile)
+        return jsonify(profile.serialize())
+    else:
+        return jsonify({"error": "Incorrect email or password"}), 401
 
 @app.route("/create_user_profile", methods=['GET', 'POST'])
 def create_user_profile():
