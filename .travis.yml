@@ -11,4 +11,4 @@ before_script:
   - export DATABASE_URL="postgresql://localhost/language_learner_dev"
 
 script:
-  - "python manage.py test"
+  - "coverage run app_test.py"
