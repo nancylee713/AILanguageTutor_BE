@@ -17,8 +17,6 @@ seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
-unsplash_access_key = app.config['UNSPLASH_ACCESS_KEY']
-
 
 @app.route("/")
 def hello():
