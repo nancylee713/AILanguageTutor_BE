@@ -1,12 +1,10 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = 'this-really-needs-to-be-changed'
+    UNSPLASH_ACCESS_KEY = os.environ['UNSPLASH_ACCESS_KEY']
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
@@ -22,7 +20,9 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 
 class TestingConfig(Config):
     TESTING = True
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
