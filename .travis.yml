@@ -7,7 +7,6 @@ before_script:
 - export APP_SETTINGS="config.DevelopmentConfig"
 - export DATABASE_URL="postgresql://localhost/language_learner_dev"
 script:
-- python3 manage.py db upgrade
 - python3 manage.py test
 deploy:
   provider: heroku
