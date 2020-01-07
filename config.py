@@ -15,6 +15,7 @@ class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
     DATABASE_URL = os.environ['DATABASE_URL'] # heroku-staging db
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
