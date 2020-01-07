@@ -86,11 +86,18 @@ def get_speech_questions():
 
 @app.route('/speech_questions/<level>')
 def get_speech_questions_by_level(level):
-    try:
-        questions = SpeechQuestion.query.filter_by(level=level).all()
-        return jsonify([e.serialize() for e in questions])
-    except Exception as e:
-        return(str(e))
+    possible_levels = ['beginner', 'intermediate', 'advanced']
+    if level in possible_levels:
+        try:
+            questions = SpeechQuestion.query.filter_by(level=level).all()
+            return jsonify([e.serialize() for e in questions])
+        except Exception as e:
+            return(str(e))
+    else:
+        return jsonify({"error": "Level must be either beginner, intermediate, or advanced NOT -{}-".format(level)}), 404
+
+
+
 
 
 @app.route('/grammar_questions')
@@ -101,6 +108,18 @@ def get_grammar_questions():
     except Exception as e:
         return(str(e))
 
+
+@app.route('/grammar_questions/<level>')
+def get_grammar_questions_by_level(level):
+    possible_levels = ['beginner', 'intermediate', 'advanced']
+    if level in possible_levels:
+        try:
+            questions = GrammarQuestion.query.filter_by(level=level).all()
+            return jsonify([e.serialize() for e in questions])
+        except Exception as e:
+            return(str(e))
+    else:
+        return jsonify({"error": "Level must be either beginner, intermediate, or advanced NOT -{}-".format(level)}), 404
 
 
 @app.route('/users_speech')
