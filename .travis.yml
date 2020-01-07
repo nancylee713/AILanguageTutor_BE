@@ -1,14 +1,29 @@
 language: python
-
 python:
-  - "3.7"
-
+- '3.7'
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
+services:
+- postgresql
 before_script:
-  - export APP_SETTINGS="config.DevelopmentConfig"
-  - export DATABASE_URL="postgresql://localhost/language_learner_dev"
-
+- psql -c 'create database travis_ci_test;' -U postgres
+- export APP_SETTINGS="config.StagingConfig"
 script:
-  - "python manage.py test"
+- python3 manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: TmigMa2OGKyvftBtg9g2OpKdi83Ebg8O0i+v32nktt3/HIBD9d55BxtFYA6S4pRaFk6DtV/iIWtMLPn97DEEneIkYiNeTiDPoeuVnyhXqxJ2I4iin33vg9hDVArQxDY0BK9/vCBNYb3YR7HQjGRdNcx55XGsGlRyBwqSIWZv8W6NnPqozejQJjuSWsM3yb9a9x0WMVluukJEsR2oBWgXKm5LJqN4ofar4T2W5WEyaNZ7smZFOLZCKz9uVgrn7n2S8BMP0lBnPCgQeZK0vDAz08SBcci8550S6Nc+hW8D1DLK0qIpdky/4RAj+xAzNcpjAHTMKjDlZZPgC/F5LxFpLNFctWbeAL/QzAHa0wdKpzntScDaTlpYNMbphWBuxmW8/4VZA9SlnD+XLzj8XYPc/4ixBJLl5jc2Gemxs3mTRd6XMhYbZWlLI1XtdE+emfmY3kGtnStFRTZnEUzwRrSqvJ+PKk3I4QBlLh8tpcPuYTSqhtKlVR/vUxm2nN9ZXGI755GapqAjftTIjdpUlXMwa/juL4q2uMx6AmrQMXrLcjSDKttUb+Mafd7peDgTqfLt8kmVeF9EP3FoTIO7R5tNTi4FOVJegU0TJT0SCP3H98tFIcI8tV/x2LnEd2vIdj3MuVKs6iyUnA8xzc6bGOxo2G/H5G5WNaMdRTrOv/aJmik=
+  app: language-learner-be
+  on:
+    repo: nancylee713/AILanguageTutor_BE
+    branch: master
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: XlR01qVdMRpOgQ0xxnoWQzaq8hsaovbZMTPl4X4YV/JFubhHjQX3mGc9R6baMh5sw8+cwNEkKVE1zlQUsrdj+LEgrJwij3HN5fPJ1vQAAbYnhDCWSw8nBStMmelG5x6c5k1BJaTKLiNJUNNrEaWUAABXJEQ+oDyHaWTXjE9vPcglT94xGsBuJQMJAG51ozGAMqCeqw3qNPeUG158cGsJ7lFRPreyAyr6T6YQKKKZbO1+UE2RMII9b75HzzfwYXHNKj3b2pnJaVN393BUHArWTShBoFq0CMMDv/hyET0xPhBKhOrBUjMLGeNYdaJ1JRNK3A2qkYxJOVJK8pcKhZFM5cky1XdsRvm1unqCAo5cha2NQIG/zdkeaHXqzZLcauCaPmHaSpAL6i1cXJtTL+jvWM7eCq3WtQeL78gn+7MD69mBngA9RtiBNrjWQcYfy5z67PT7I0VT216TcZtg+ABwgA9jkfv1c38TrQB3+iCwx6CMdfRjr8VhEgEMP16t8HxnQ3SpmM7ubDYd9LO/8zo+tBH6d1zGulu3MklkM2jC1TxXmTsnx8ZrM2VJ1BX1VPvm9fZ72yRC6TTSOn294XkpqaTo6BVDtDYEtDaucI4s1wrdOZCkSYZnmrBiv5APUNFjM7qu7UXjfYj9cuGF+xq0Wz4vNdRu46nrrl7gPWBWen4=
+  app: language-learner-be
+  on:
+    repo: nancylee713/AILanguageTutor_BE
+    branch: staging
