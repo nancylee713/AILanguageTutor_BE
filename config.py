@@ -5,7 +5,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     UNSPLASH_ACCESS_KEY = os.environ['UNSPLASH_ACCESS_KEY']
-    DATABASE_URL = "postgresql://localhost/language_learner_dev"
+    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/language_learner_dev"
 
 
 class ProductionConfig(Config):
@@ -14,7 +14,7 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    DATABASE_URL = os.environ['DATABASE_URL'] # heroku-staging db
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL'] # heroku-staging db
     PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 class DevelopmentConfig(Config):
