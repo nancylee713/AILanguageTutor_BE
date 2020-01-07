@@ -2,9 +2,7 @@ import os
 from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-import requests
-import json
-from flask_seeder import FlaskSeeder
+# from flask_seeder import FlaskSeeder
 
 app = Flask(__name__)
 
@@ -13,8 +11,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-seeder = FlaskSeeder()
-seeder.init_app(app, db)
+# seeder = FlaskSeeder()
+# seeder.init_app(app, db)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
@@ -85,6 +83,16 @@ def get_speech_questions():
     except Exception as e:
         return(str(e))
 
+
+@app.route('/speech_questions/<level>')
+def get_speech_questions_by_level(level):
+    try:
+        questions = SpeechQuestion.query.filter_by(level=level).all()
+        return jsonify([e.serialize() for e in questions])
+    except Exception as e:
+        return(str(e))
+
+
 @app.route('/grammar_questions')
 def get_grammar_questions():
     try:
@@ -92,6 +100,8 @@ def get_grammar_questions():
         return jsonify([e.serialize() for e in users])
     except Exception as e:
         return(str(e))
+
+
 
 @app.route('/users_speech')
 def get_users_speech():
