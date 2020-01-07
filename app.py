@@ -1,21 +1,64 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json, session
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-
+import requests
+import json
+from flask_seeder import FlaskSeeder
 
 app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
+seeder = FlaskSeeder()
+seeder.init_app(app, db)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
-
 
 @app.route("/")
 def hello():
     return "Hello World!"
+
+@app.route("/signup", methods=['GET','POST'])
+def create_new_user():
+    req=request.get_json()
+    password=request.args.get('password')
+    print("Email : {}, Password: {}".format(req['email'],req['password']))
+    hash = bcrypt.generate_password_hash(req['password']).decode('utf-8')
+    check_user_exists = User.query.filter_by(email=req['email']).first()
+    if check_user_exists:
+        return jsonify({'error': 'Email already exists'}), 409
+
+
+    user = User(email=req['email'], password=hash)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({'user_id':user.id, 'email':user.email}), 222
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login_user():
+    req=request.get_json()
+    user=User.query.filter_by(email=req['email']).first()
+    if user and bcrypt.check_password_hash(user.password, req['password']):
+        profile=UserProfile.query.filter_by(user_id=user.id).first()
+        print(profile)
+        return jsonify(profile.serialize())
+    else:
+        return jsonify({"error": "Incorrect email or password"}), 401
+
+@app.route("/create_user_profile", methods=['GET', 'POST'])
+def create_user_profile():
+    req=request.get_json()
+    user_profile=UserProfile(user_id=req['user_id'], name=req['name'], age=req['age'], proficiency=req['proficiency'])
+    db.session.add(user_profile)
+    db.session.commit()
+    return jsonify(user_profile.serialize())
+
+
 
 @app.route('/users')
 def get_users():
