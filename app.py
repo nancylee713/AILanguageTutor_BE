@@ -2,9 +2,6 @@ import os
 from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-import requests
-import json
-from flask_seeder import FlaskSeeder
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -15,8 +12,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-# seeder = FlaskSeeder()
-# seeder.init_app(app, db)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
