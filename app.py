@@ -5,8 +5,10 @@ from flask_sqlalchemy import SQLAlchemy
 import requests
 import json
 from flask_seeder import FlaskSeeder
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
