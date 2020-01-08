@@ -2,6 +2,7 @@
 A RESTful JSON API that stores and delivers grammar and vocabulary content based on skill level. The frontend associated with this API can be found [here](https://github.com/nancylee713/AILanguageTutor_FE). 
 
 [Live Demo](http://language-learner-be.herokuapp.com/swagger)
+[Project board](https://github.com/users/nancylee713/projects/1)
 
 ### Get Started
 <details>
