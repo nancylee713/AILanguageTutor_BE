@@ -2,25 +2,39 @@ import os
 from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-import requests
-import json
-from flask_seeder import FlaskSeeder
+from flask_cors import CORS
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
+CORS(app)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-seeder = FlaskSeeder()
-seeder.init_app(app, db)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
+
+## swagger
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Language Learner API"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 @app.route("/")
 def hello():
     return "Hello World!"
+
+@app.route("/static/<path:path>")
+def spec(path):
+    return send_from_directory('static', path)
 
 @app.route("/signup", methods=['GET','POST'])
 def create_new_user():
@@ -85,6 +99,23 @@ def get_speech_questions():
     except Exception as e:
         return(str(e))
 
+
+@app.route('/speech_questions/<level>')
+def get_speech_questions_by_level(level):
+    possible_levels = ['beginner', 'intermediate', 'advanced']
+    if level in possible_levels:
+        try:
+            questions = SpeechQuestion.query.filter_by(level=level).all()
+            return jsonify([e.serialize() for e in questions])
+        except Exception as e:
+            return(str(e))
+    else:
+        return jsonify({"error": "Level must be either beginner, intermediate, or advanced NOT -{}-".format(level)}), 404
+
+
+
+
+
 @app.route('/grammar_questions')
 def get_grammar_questions():
     try:
@@ -92,6 +123,20 @@ def get_grammar_questions():
         return jsonify([e.serialize() for e in users])
     except Exception as e:
         return(str(e))
+
+
+@app.route('/grammar_questions/<level>')
+def get_grammar_questions_by_level(level):
+    possible_levels = ['beginner', 'intermediate', 'advanced']
+    if level in possible_levels:
+        try:
+            questions = GrammarQuestion.query.filter_by(level=level).all()
+            return jsonify([e.serialize() for e in questions])
+        except Exception as e:
+            return(str(e))
+    else:
+        return jsonify({"error": "Level must be either beginner, intermediate, or advanced NOT -{}-".format(level)}), 404
+
 
 @app.route('/users_speech')
 def get_users_speech():
@@ -108,6 +153,7 @@ def get_users_grammar():
         return jsonify([e.serialize() for e in users])
     except Exception as e:
         return(str(e))
+
 
 if __name__ == '__main__':
     app.run()
