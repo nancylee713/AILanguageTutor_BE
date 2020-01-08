@@ -45,11 +45,12 @@ class TestFlaskApi(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(data), 5)
 
-    def sad_test_get_speech_questions_by_wrong_level(self):
+    def test_sad_get_speech_questions_by_wrong_level(self):
         response = self.app.get(BAD_SPEECH_QUESTIONS_BY_LEVEL_URL)
         data = json.loads(response.get_data())
         self.assertEqual(response.status_code, 404)
-        self.assertEqual({"error: "})
+        print('self--->', data)
+        self.assertEqual(data, {'error': 'Level must be either beginner, intermediate, or advanced NOT -easy-'})
 
     def test_get_all_grammar_questions(self):
         response = self.app.get(GRAMMAR_QUESTIONS_URL)
@@ -63,11 +64,11 @@ class TestFlaskApi(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(data), 5)
 
-    def sad_test_get_grammar_questions_by_wrong_level(self):
+    def test_sad_get_grammar_questions_by_wrong_level(self):
         response = self.app.get(BAD_GRAMMAR_QUESTIONS_BY_LEVEL_URL)
         data = json.loads(response.get_data())
         self.assertEqual(response.status_code, 404)
-        self.assertEqual({"error":"Cannot get "})
+        self.assertEqual(data, {'error': 'Level must be either beginner, intermediate, or advanced NOT -hard-'})
 
     # def test_get_all_users(self):
     #     response = self.app.get(USERS_URL)
