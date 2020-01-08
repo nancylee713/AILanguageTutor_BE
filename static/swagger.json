@@ -1,0 +1,200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Language Learner API",
+    "version": "1.0",
+    "description": "A short API doc describes some of the endpoints for the Language Learner API through the Swagger specification"
+  },
+  "host": "language-learner-be.herokuapp.com",
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/speech_questions": {
+      "get": {
+        "description": "Get all the speech questions.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the object."
+                },
+                "level": {
+                  "type": "string",
+                  "description": "level of difficulty of a given word."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "question content."
+                },
+                "image_url": {
+                  "type": "string",
+                  "description": "image url related to a given word."
+                },
+                "created_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                },
+                "updated_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/speech_questions/{level}": {
+      "get": {
+        "description": "Gets speech questions based on difficulty level.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "level",
+            "description": "Filter questions by difficulty level, including beginner, intermediate, and advanced.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the object."
+                },
+                "level": {
+                  "type": "string",
+                  "description": "level of difficulty of a given word."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "question content."
+                },
+                "image_url": {
+                  "type": "string",
+                  "description": "image url related to a given word."
+                },
+                "created_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                },
+                "updated_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/grammar_questions": {
+      "get": {
+        "description": "Get all the grammar questions.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the object."
+                },
+                "level": {
+                  "type": "string",
+                  "description": "level of difficulty of a given sentence."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "question content."
+                },
+                "created_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                },
+                "updated_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/grammar_questions/{level}": {
+      "get": {
+        "description": "Gets grammar questions based on difficulty level.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "level",
+            "description": "Filter questions by difficulty level, including beginner, intermediate, and advanced.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the object."
+                },
+                "level": {
+                  "type": "string",
+                  "description": "level of difficulty of a given sentence."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "question content."
+                },
+                "created_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                },
+                "updated_date": {
+                  "type": "string",
+                  "description": "timestamp."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
