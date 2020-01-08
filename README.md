@@ -103,7 +103,7 @@ A RESTful JSON API that stores and delivers grammar and vocabulary content based
 
 
 ### Use of this API
-This api is used to create and login users. Then it is able to return questions based on the specified proficiency level, and whether or not the user has answered them already.
+This api is used to create and login users. Then it is able to return questions based on the specified proficiency level, and whether or not the user has answered them already. Endpoints can be tested with Swagger by appending `/swagger` to the base url.
 
 
  <details>

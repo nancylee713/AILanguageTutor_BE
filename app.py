@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, json, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 CORS(app)
@@ -15,9 +16,25 @@ bcrypt = Bcrypt(app)
 
 from models import User, UserProfile, SpeechQuestion, GrammarQuestion, UserSpeech, UserGrammar
 
+## swagger
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Language Learner API"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+
 @app.route("/")
 def hello():
     return "Hello World!"
+
+@app.route("/static/<path:path>")
+def spec(path):
+    return send_from_directory('static', path)
 
 @app.route("/signup", methods=['GET','POST'])
 def create_new_user():
@@ -136,6 +153,7 @@ def get_users_grammar():
         return jsonify([e.serialize() for e in users])
     except Exception as e:
         return(str(e))
+
 
 if __name__ == '__main__':
     app.run()
