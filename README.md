@@ -42,7 +42,7 @@ A RESTful JSON API that stores and delivers grammar and vocabulary content based
 
  5. Install dependencies.
  ```
- $ run pip install -r
+ $ pip install -r requirements.txt
  ```
 
  6. Run migration. Initialize and update the tables:
@@ -115,7 +115,7 @@ This api is used to create and login users. Then it is able to return questions 
   <br>
   example successful response:
 
-  ```json
+  ```
   [
     {
       created_date: "Mon, 06 Jan 2020 21:32:28 GMT",
@@ -146,7 +146,7 @@ This api is used to create and login users. Then it is able to return questions 
   <br>
   example successful response:
 
-  ```json
+  ```
   [
     {
       created_date: "Mon, 06 Jan 2020 14:52:54 GMT",
