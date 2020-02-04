@@ -1,6 +1,8 @@
-# some other name
-A RESTful JSON API that stores and delivers grammar and vocabulary content based on skill level. The frontend associated with this API can be found [here](https://github.com/nancylee713/AILanguageTutor_FE).
+# Language Learner
+A RESTful JSON API that stores and delivers grammar and vocabulary content based on skill level. The frontend associated with this API can be found [here](https://github.com/nancylee713/AILanguageTutor_FE). 
 
+[Live Demo](http://language-learner-be.herokuapp.com/swagger)
+[Project board](https://github.com/users/nancylee713/projects/1)
 
 ### Get Started
 <details>
@@ -40,7 +42,7 @@ A RESTful JSON API that stores and delivers grammar and vocabulary content based
 
  5. Install dependencies.
  ```
- $ run pip install -r
+ $ pip install -r requirements.txt
  ```
 
  6. Run migration. Initialize and update the tables:
@@ -103,7 +105,7 @@ A RESTful JSON API that stores and delivers grammar and vocabulary content based
 
 
 ### Use of this API
-This api is used to create and login users. Then it is able to return questions based on the specified proficiency level, and whether or not the user has answered them already. Endpoints can be tested with Swagger by appending `/swagger` to the base url.
+This api is used to create and login users. Then it is able to return questions based on the specified proficiency level, and whether or not the user has answered them already. Endpoints can be tested with Swagger [here](http://language-learner-be.herokuapp.com/swagger).
 
 
  <details>
@@ -113,7 +115,7 @@ This api is used to create and login users. Then it is able to return questions 
   <br>
   example successful response:
 
-  ```json
+  ```
   [
     {
       created_date: "Mon, 06 Jan 2020 21:32:28 GMT",
@@ -144,7 +146,7 @@ This api is used to create and login users. Then it is able to return questions 
   <br>
   example successful response:
 
-  ```json
+  ```
   [
     {
       created_date: "Mon, 06 Jan 2020 14:52:54 GMT",
