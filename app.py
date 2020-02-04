@@ -58,9 +58,8 @@ def login_user():
     req=request.get_json()
     user=User.query.filter_by(email=req['email']).first()
     if user and bcrypt.check_password_hash(user.password, req['password']):
-        profile=UserProfile.query.filter_by(user_id=user.id).first()
-        print(profile)
-        return jsonify(profile.serialize())
+        profile=UserProfile.query.filter_by(user_id=user.id).first().serialize()
+        return jsonify({**profile, 'email':user.email})
     else:
         return jsonify({"error": "Incorrect email or password"}), 401
 
