@@ -69,7 +69,7 @@ def create_user_profile():
     user_profile=UserProfile(user_id=req['user_id'], name=req['name'], age=req['age'], proficiency=req['proficiency'])
     db.session.add(user_profile)
     db.session.commit()
-    return jsonify(user_profile.serialize())
+    return jsonify({**user_profile.serialize(), 'email':req['email']})
 
 
 
